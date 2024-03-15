@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     Vector3 moveValues;
 
-    private float _rotateSpeed = 50f;
+    private float _rotateSpeed = 100f;
 
     private void Awake()
     {
@@ -35,10 +35,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerPosition = playerInput.actions["Move"].ReadValue<Vector2>();
-        _animator.SetFloat("velocity", playerPosition.magnitude);
 
         moveValues = transform.forward * playerPosition.y + transform.right * playerPosition.x;
-        _cC.Move(moveValues * Time.deltaTime * speed);
+        _cC.Move(new Vector3(moveValues.x, moveValues.y * Physics.gravity.y, moveValues.z) * Time.deltaTime * speed);
 
         var keyboard = Keyboard.current;
         if (keyboard == null)
@@ -49,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private void RotatoinTowardsMovementDirection()
     {
         float rotateDirection = playerInput.actions["Rotate"].ReadValue<float>();
-        transform.Rotate(Vector3.up * Time.deltaTime * _rotateSpeed * rotateDirection);
+        transform.Rotate(Vector3.up * Time.deltaTime * _rotateSpeed * rotateDirection, Space.Self);
     }
 
     private void OnEnable()
@@ -61,9 +60,9 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump(InputAction.CallbackContext context)
     {
+            UnityEngine.Debug.Log("jumping");
         if (_cC.isGrounded)
         {
-            UnityEngine.Debug.Log("jumping");
             //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             _cC.Move(new Vector3(0, jumpForce, 0));
         }
@@ -76,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void IncreaseSpeed(InputAction.CallbackContext context)
     {
+        _animator.SetFloat("velocity", playerPosition.magnitude * speed);
         StartCoroutine("Run");
     }
 
