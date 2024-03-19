@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
         playerPosition = playerInput.actions["Move"].ReadValue<Vector2>();
 
         moveValues = transform.forward * playerPosition.y + transform.right * playerPosition.x;
-        _cC.Move(new Vector3(moveValues.x, moveValues.y * Physics.gravity.y, moveValues.z) * Time.deltaTime * speed);
+        _cC.Move(moveValues * Time.deltaTime * speed);
+
+        //rb.transform. += Physics.gravity * Time.deltaTime;
 
         var keyboard = Keyboard.current;
         if (keyboard == null)
