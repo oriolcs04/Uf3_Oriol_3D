@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 
 public class PlayerController : MonoBehaviour
 {
-    public event Action Shooting;
+    public event Action<bool> Shooting = delegate { };
 
 
     public InputAction controls;
@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     public float mx;
     public float my;
+    private bool canShoot = true;
 
     private void Awake()
     {
@@ -82,6 +83,23 @@ public class PlayerController : MonoBehaviour
         playerInput.actions["Move"].canceled += ResetSpeed;
         playerInput.actions["Jump"].performed += PlayerJump;
         playerInput.actions["Crouch"].performed += Crouch;
+        playerInput.actions["Shoot"].performed += ShootActivate;
+    }
+
+    private void ShootActivate(InputAction.CallbackContext context)
+    {
+        if (canShoot)
+        {
+            StartCoroutine(ShootingCd());
+        }
+    }
+
+    IEnumerator ShootingCd()
+    {
+        canShoot = false;
+        Shooting.Invoke(true);
+        yield return new WaitForSeconds(1);
+        canShoot = true;
     }
 
     private void Crouch(InputAction.CallbackContext context)
@@ -95,7 +113,7 @@ public class PlayerController : MonoBehaviour
         if (grounded)
         {
             _animator.SetBool("jump", true);
-            rb.velocity = new Vector3(0f, 1f, 0f) * jumpForce;
+            rb.velocity = Vector3.up * jumpForce;
         }
     }
 
@@ -109,6 +127,10 @@ public class PlayerController : MonoBehaviour
         if (increasingSpeed == false && !isCrouching)
         {
             StartCoroutine("Run");
+        }
+        else if (isCrouching)
+        {
+            speed = 2;
         }
     }
 
@@ -125,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = true;
             _animator.SetBool("jump", false);
@@ -134,7 +156,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = false;
         }

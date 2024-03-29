@@ -5,19 +5,50 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+    PlayerController playerController;
+    GameObject objHolder;
+
+    public bool st;
+    public Animator animator;
     public Transform spawnPoint;
     public GameObject bottlePrefab;
-    public float bottleSpeed = 10f;
+    private float bottleSpeed = 30f;
 
-
-    private void Start()
+    private void Awake()
     {
-        //PlayerController.Shooting += ShootBottle();
+        playerController = GetComponentInParent<PlayerController>();
+        objHolder = GameObject.FindGameObjectWithTag("WorldObjectHolder");
     }
 
-    void ShootBottle()
+    private void Update()
     {
-        var bottle = Instantiate(bottlePrefab, spawnPoint.transform);
-        bottle.GetComponent<Rigidbody>().velocity = spawnPoint.forward * bottleSpeed;
+        st = animator.GetBool("shoot");
+
+    }
+
+    private void OnEnable()
+    {
+         playerController.Shooting += ShootBottle;
+    }
+
+    private void OnDisable()
+    {
+        playerController.Shooting -= ShootBottle;
+    }
+
+    private void ShootBottle(bool isShooting)
+    {
+        animator.SetBool("shoot", isShooting);
+
+        var bottle = Instantiate(bottlePrefab, transform.position, transform.rotation, objHolder.transform) ;
+        bottle.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * bottleSpeed, ForceMode.Impulse);
+
+        StartCoroutine(EndShootingAnimation());
+    }
+
+    IEnumerator EndShootingAnimation()
+    {
+        yield return new WaitForSeconds(1.16f);
+        animator.SetBool("shoot", false);
     }
 }
