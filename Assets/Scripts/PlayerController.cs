@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+
 public class PlayerController : MonoBehaviour
 {
+    public event Action Shooting;
+
+
     public InputAction controls;
     public PlayerInput playerInput;
     public Vector2 playerPosition;
@@ -13,20 +18,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
     private Animator _animator;
-    //private float jumpForce = 3;
+    private float jumpForce = 7;
+    public bool grounded = true;
 
     [Range(0f, 13.5f)]
-    public float speed;
+    public float speed = 4.5f;
     Vector3 moveValues;
 
     private float _rotateSpeed = 300;
     private bool increasingSpeed;
+
+    public bool isCrouching = false;
+
+    public float mx;
+    public float my;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         _animator = GetComponentInChildren<Animator>();
+        
     }
 
 
@@ -35,36 +47,56 @@ public class PlayerController : MonoBehaviour
         playerPosition = playerInput.actions["Move"].ReadValue<Vector2>();
         _animator.SetFloat("velocity", playerPosition.magnitude * speed);
 
+        mx = playerPosition.x;
+        my = playerPosition.y;
         
+        if (isCrouching)
+        {
+            speed = 4.5f;
+        }
         moveValues = (transform.forward * playerPosition.y + transform.right * playerPosition.x) * speed;
 
         Vector3 playerVelocity = new Vector3(moveValues.x, rb.velocity.y, moveValues.z);
         rb.velocity = playerVelocity;
-
         RotatoinTowardsMovementDirection();
+
     }
 
     private void RotatoinTowardsMovementDirection()
     {
         float rotateDirection = playerInput.actions["Rotate"].ReadValue<float>();
-        transform.Rotate(Vector3.up * Time.deltaTime * _rotateSpeed * rotateDirection, Space.Self);
+
+        if (rotateDirection != 0f)
+        {
+            transform.Rotate(Vector3.up * Time.deltaTime * _rotateSpeed * rotateDirection, Space.Self);
+        }
+        else
+        {
+            transform.rotation = transform.rotation;
+        }
     }
 
     private void OnEnable()
     {
         playerInput.actions["Move"].performed += IncreaseSpeed;
         playerInput.actions["Move"].canceled += ResetSpeed;
-        //playerInput.actions["Jump"].performed += PlayerJump;
+        playerInput.actions["Jump"].performed += PlayerJump;
+        playerInput.actions["Crouch"].performed += Crouch;
+    }
+
+    private void Crouch(InputAction.CallbackContext context)
+    {
+        _animator.SetBool("crouch", !isCrouching);
+        isCrouching = _animator.GetBool("crouch");
     }
 
     private void PlayerJump(InputAction.CallbackContext context)
     {
-        //    UnityEngine.Debug.Log("jumping");
-        //if (_cC.isGrounded)
-        //{
-        //    //rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-        //    _cC.Move(new Vector3(0, jumpForce, 0));
-        //}
+        if (grounded)
+        {
+            _animator.SetBool("jump", true);
+            rb.velocity = new Vector3(0f, 1f, 0f) * jumpForce;
+        }
     }
 
     private void ResetSpeed(InputAction.CallbackContext context)
@@ -74,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     private void IncreaseSpeed(InputAction.CallbackContext context)
     {
-        if (increasingSpeed == false)
+        if (increasingSpeed == false && !isCrouching)
         {
             StartCoroutine("Run");
         }
@@ -86,10 +118,25 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(4f);
         if (speed < 13.5f)
         {
-            this.speed += 3f;
+            speed += 3f;
         }
         increasingSpeed = false;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            grounded = true;
+            _animator.SetBool("jump", false);
+        }
+    }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            grounded = false;
+        }
+    }
 }
