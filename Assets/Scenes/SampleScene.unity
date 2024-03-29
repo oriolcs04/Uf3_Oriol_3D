@@ -556,11 +556,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6062076988d7b20479afb58eb8014580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  st: 0
   animator: {fileID: 1621289587}
   spawnPoint: {fileID: 1240279910}
   bottlePrefab: {fileID: 6373586955390204304, guid: 229df18771ef8b04099f9299338f787e,
     type: 3}
-  bottleSpeed: 1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558245164}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36898595, y: 0.4005096, z: -0.18042536, w: 0.8190777}
+  m_LocalRotation: {x: 0.36898592, y: 0.4005096, z: -0.18042538, w: 0.8190776}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1169,7 +1169,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049264269}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41653505, y: 0.38920105, z: -0.2036758, w: 0.7959506}
+  m_LocalRotation: {x: 0.41653505, y: 0.389201, z: -0.20367576, w: 0.7959506}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 1240279913}
   - component: {fileID: 1240279912}
   - component: {fileID: 1240279911}
+  - component: {fileID: 1240279915}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1597,6 +1598,20 @@ CapsuleCollider:
   m_Height: 1.8394964
   m_Direction: 1
   m_Center: {x: 0, y: 0.92933095, z: 0.10191661}
+--- !u!114 &1240279915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240279909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c798a654b8b69994297768e8ae62d6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS_Cam: {fileID: 1988605498}
+  TPS_Cam: {fileID: 2116059554}
 --- !u!1 &1307426385
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,7 +2028,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988605494}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -2389,7 +2404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116059550}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41653508, y: 0.38920107, z: -0.20367584, w: 0.7959506}
+  m_LocalRotation: {x: 0.41653508, y: 0.38920102, z: -0.2036758, w: 0.7959506}
   m_LocalPosition: {x: -1.390817, y: 4.5, z: -1.0621337}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
