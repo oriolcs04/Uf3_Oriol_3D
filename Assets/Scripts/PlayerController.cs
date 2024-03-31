@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 {
     public event Action<bool> Shooting = delegate { };
 
+    [SerializeField] GameObject bottle;
+    [SerializeField] GameObject orb;
 
     public InputAction controls;
     public PlayerInput playerInput;
@@ -39,7 +41,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         _animator = GetComponentInChildren<Animator>();
-        
     }
 
 
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     private void ShootActivate(InputAction.CallbackContext context)
     {
-        if (canShoot)
+        if (canShoot && bottle.activeInHierarchy)
         {
             StartCoroutine(ShootingCd());
         }
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
     {
         canShoot = false;
         Shooting.Invoke(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.4f);
         canShoot = true;
     }
 
@@ -124,7 +125,7 @@ public class PlayerController : MonoBehaviour
 
     private void IncreaseSpeed(InputAction.CallbackContext context)
     {
-        if (increasingSpeed == false && !isCrouching)
+        if (increasingSpeed == false && !isCrouching && orb.activeInHierarchy)
         {
             StartCoroutine("Run");
         }

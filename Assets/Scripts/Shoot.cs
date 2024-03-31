@@ -40,15 +40,21 @@ public class Shoot : MonoBehaviour
     {
         animator.SetBool("shoot", isShooting);
 
-        var bottle = Instantiate(bottlePrefab, transform.position, transform.rotation, objHolder.transform) ;
+        StartCoroutine(WaitForAnimation());
+        StartCoroutine(EndShootingAnimation());
+    }
+
+    IEnumerator WaitForAnimation()
+    {
+        yield return new WaitForSeconds(0.4f);
+        var bottle = Instantiate(bottlePrefab, transform.position, transform.rotation, objHolder.transform);
         bottle.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * bottleSpeed, ForceMode.Impulse);
 
-        StartCoroutine(EndShootingAnimation());
     }
 
     IEnumerator EndShootingAnimation()
     {
-        yield return new WaitForSeconds(1.16f);
+        yield return new WaitForSeconds(1f);
         animator.SetBool("shoot", false);
     }
 }
