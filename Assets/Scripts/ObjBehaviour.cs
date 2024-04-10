@@ -6,7 +6,9 @@ public class ObjBehaviour : MonoBehaviour
 {
 
     [SerializeField] GameObject bottle;
+    [SerializeField] GameObject bottleIcon;
     [SerializeField] GameObject orb;
+    [SerializeField] GameObject orbIcon;
 
     void FixedUpdate()
     {
@@ -19,10 +21,12 @@ public class ObjBehaviour : MonoBehaviour
         if (gameObject.CompareTag("Bottle"))
         {
             bottle.SetActive(true);
+            bottleIcon.SetActive(true);
         }
         else if (gameObject.CompareTag("Orb"))
         {
             orb.SetActive(true);
+            orbIcon.SetActive(true);
         }
         gameObject.SetActive(false);
     }

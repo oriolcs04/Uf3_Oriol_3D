@@ -17,7 +17,6 @@ public class GuitarBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Epa");
         if (collision.gameObject.CompareTag("Player"))
         {
             EndGame();
@@ -29,15 +28,13 @@ public class GuitarBehaviour : MonoBehaviour
         animator.SetLayerWeight(2, 1);
         animator.SetBool("emote", true);
         playerController.enabled = false;
+
         StartCoroutine(WaitForEmote());
     }
 
     IEnumerator WaitForEmote()
     {
         yield return new WaitForSeconds(5f);
-        if (Input.anyKey)
-        {
-            SceneManager.LoadScene(1);
-        }
+        SceneManager.LoadScene(1);
     }
 }
