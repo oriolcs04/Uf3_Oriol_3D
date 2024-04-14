@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AlertScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float speedRotation = 120f;
+    public float timeRotation = 4f;
+    public Color colorState = Color.yellow;
+
+    private StateMachine stateMachine;
+    private NavMeshController navMeshController;
+    private float timeSearching;
+
+    private void Awake()
     {
-        
+        stateMachine = GetComponent<StateMachine>();
+        navMeshController = GetComponent<NavMeshController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        stateMachine.meshRenderIndicator.material.color = colorState;
+
+        navMeshController.StopNavMeshAgent();
+
+        timeSearching = 0f;
+    }
+
+    private void Update()
+    {
+        transform.Rotate(0f, speedRotation * Time.deltaTime, 0f);
+        timeSearching += Time.deltaTime;
+        if(timeSearching >= timeRotation)
+        {
+            stateMachine.ActivateState(stateMachine.patrolState);
+        }
     }
 }

@@ -636,6 +636,7 @@ GameObject:
   - component: {fileID: 137491063}
   - component: {fileID: 137491062}
   - component: {fileID: 137491061}
+  - component: {fileID: 137491064}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -730,6 +731,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137491059}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &137491064
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137491059}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &165315557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34688f664e439d444842eb219f57a892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedRotation: 120
+  timeRotation: 4
+  colorState: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!135 &441825348
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2871,7 +2902,7 @@ MonoBehaviour:
     m_Flags: 0
   playerInput: {fileID: 0}
   playerPosition: {x: 0, y: 0}
-  rb: {fileID: 0}
+  rb: {fileID: 1366261972}
   grounded: 1
   speed: 4.5
   isCrouching: 0
@@ -3144,7 +3175,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408514569}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!4 &1408514574
 Transform:
   m_ObjectHideFlags: 0

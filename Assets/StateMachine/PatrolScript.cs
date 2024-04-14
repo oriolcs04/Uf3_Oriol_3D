@@ -50,8 +50,9 @@ public class PatrolScript : MonoBehaviour
     //Si el jugador entra dentro del area del usuario, este cambia a estado de alerta.
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
+            Debug.Log(other.gameObject.name);
             stateMachine.ActivateState(stateMachine.alertState);
         }
     }
