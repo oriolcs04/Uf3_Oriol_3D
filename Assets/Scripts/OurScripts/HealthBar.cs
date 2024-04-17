@@ -12,13 +12,15 @@ public class HealthBar : MonoBehaviour
 
     private float lifeToBar;
 
+    private StateMachine stateMachine;
+
     private void Start()
     {
         actualHealth = totalHealth;
     }
     private void Awake()
     {
-
+        stateMachine = GetComponent<StateMachine>();
         healthBar = GetComponentInChildren<Slider>();
     }
 
@@ -38,5 +40,6 @@ public class HealthBar : MonoBehaviour
         healthBar.enabled = true;
         
     }
+
 }
 

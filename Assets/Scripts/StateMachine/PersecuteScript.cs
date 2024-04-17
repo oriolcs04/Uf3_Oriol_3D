@@ -24,14 +24,6 @@ public class PersecuteScript : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit hit;
-        if(!visionController.PlayerInRange(out hit, true))
-        {
-            stateMachine.ActivateState(stateMachine.alertState);
-            return;
-        }
-
         navMeshController.UpdateTargetObjective();
-
     }
 }
