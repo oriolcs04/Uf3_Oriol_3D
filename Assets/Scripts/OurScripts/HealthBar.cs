@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class HealthBar : MonoBehaviour
     {
         HealthToBar();
         healthBar.value = lifeToBar;
+        CheckLife();
     }
 
     private void HealthToBar()
@@ -40,6 +42,16 @@ public class HealthBar : MonoBehaviour
         healthBar.enabled = true;
         
     }
+
+    public void CheckLife()
+    {
+        if (actualHealth <= totalHealth / 3)
+        {
+            stateMachine.ActivateState(stateMachine.fleeState);
+        }
+    }
+
+
 
 }
 

@@ -8,6 +8,7 @@ TagManager:
   - WorldObjectHolder
   - Bottle
   - Orb
+  - Enemy
   layers:
   - Default
   - TransparentFX

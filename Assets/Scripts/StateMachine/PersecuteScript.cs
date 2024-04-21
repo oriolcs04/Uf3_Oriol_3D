@@ -7,14 +7,14 @@ public class PersecuteScript : MonoBehaviour
     public Color colorState = Color.red;
 
     private StateMachine stateMachine;
+    private Attack attack;
     private NavMeshController navMeshController;
-    private VisionController visionController;
 
     private void Awake()
     {
         stateMachine = GetComponent<StateMachine>();
         navMeshController = GetComponent<NavMeshController>();
-        visionController = GetComponent<VisionController>();
+        attack = GetComponent<Attack>();
     }
 
     private void OnEnable()
@@ -25,5 +25,7 @@ public class PersecuteScript : MonoBehaviour
     private void Update()
     {
         navMeshController.UpdateTargetObjective();
+        if (navMeshController.ObjectiveInRange()) attack.AttackPlayer();
+        else navMeshController.ActivateNavMeshAgent();
     }
 }

@@ -20,7 +20,7 @@ public class NavMeshController : MonoBehaviour
     public void UpdateTargetObjective(Vector3 newTarget)
     {
         navMeshAgent.destination = newTarget;
-        navMeshAgent.isStopped = false;
+        ActivateNavMeshAgent();
     }
 
     //Este metodo lo utilizaremos cuando querramos que persiga a un objetivo movible.
@@ -35,9 +35,25 @@ public class NavMeshController : MonoBehaviour
         navMeshAgent.isStopped = true;
     }
 
+    public void ActivateNavMeshAgent()
+    {
+        navMeshAgent.isStopped = false;
+    }
+
     //Devuelve si el usuario llegó al punto señalizado
     public bool ObjectiveArrived()
     {
         return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending;
     }
+
+    public bool ObjectiveInRange()
+    {
+        return navMeshAgent.remainingDistance <= 3;
+    }
+
+    public void ChangeSpeed(float speed)
+    {
+        navMeshAgent.speed = speed;
+    } 
+
 }

@@ -10,7 +10,7 @@ public class PatrolScript : MonoBehaviour
     private StateMachine stateMachine;
     private NavMeshController navMeshController;
     private VisionController visionController;
-    private int nextWayPoint;
+    public int nextWayPoint;
 
     private void Awake()
     {

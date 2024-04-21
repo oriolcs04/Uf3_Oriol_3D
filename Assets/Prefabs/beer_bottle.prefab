@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 13.889
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 13.889
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 13.889
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
@@ -31,7 +31,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 97.04
+      value: 97.049
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e31af566e986e04d970753157aa96dd,
         type: 3}
@@ -157,10 +157,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.008348083
-  m_Height: 0.04801941
+  m_Radius: 0.011538022
+  m_Height: 0.055029508
   m_Direction: 2
-  m_Center: {x: 0.00022735597, y: 0.0000000014901161, z: -0.0027877807}
+  m_Center: {x: 0.0014190178, y: -0.00070216024, z: -0.0040840814}
 --- !u!114 &628522028368216554
 MonoBehaviour:
   m_ObjectHideFlags: 0
