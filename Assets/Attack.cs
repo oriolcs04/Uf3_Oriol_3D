@@ -9,6 +9,7 @@ public class Attack : MonoBehaviour
     public RawImage hitted;
     private NavMeshController navMeshController;
     private Rigidbody player;
+    Animator animator;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class Attack : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         navMeshController = GetComponent<NavMeshController>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
@@ -24,6 +26,7 @@ public class Attack : MonoBehaviour
     public void AttackPlayer()
     {
         hitted.enabled = true;
+        animator.SetBool("punching", true);
         navMeshController.StopNavMeshAgent();
         StartCoroutine(BleedingTime(0.5f));
     }
@@ -32,5 +35,6 @@ public class Attack : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBleeding);
         hitted.enabled = false;
+        animator.SetBool("punching", false);
     } 
 }

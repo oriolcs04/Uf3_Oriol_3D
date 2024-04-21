@@ -9,6 +9,7 @@ public class AlertScript : MonoBehaviour
     public float timeRotation = 4f;
     public Color colorState = Color.yellow;
 
+    Animator animator;
     private StateMachine stateMachine;
     private NavMeshController navMeshController;
     private float timeSearching;
@@ -17,11 +18,12 @@ public class AlertScript : MonoBehaviour
     {
         stateMachine = GetComponent<StateMachine>();
         navMeshController = GetComponent<NavMeshController>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
-        stateMachine.meshRenderIndicator.material.color = colorState;
+        animator.SetFloat("velocity", 0);
 
         navMeshController.StopNavMeshAgent();
 

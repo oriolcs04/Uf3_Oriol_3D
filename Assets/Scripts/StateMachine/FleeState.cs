@@ -6,6 +6,7 @@ public class FleeState : MonoBehaviour
 {
     public Color colorState = Color.magenta;
 
+    Animator animator;
     private StateMachine stateMachine;
     private NavMeshController navMeshController;
     private HealthBar health;
@@ -14,6 +15,7 @@ public class FleeState : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         health = GetComponent<HealthBar>();
         stateMachine = GetComponent<StateMachine>();
         navMeshController = GetComponent<NavMeshController>();
@@ -22,7 +24,7 @@ public class FleeState : MonoBehaviour
 
     private void OnEnable()
     {
-        stateMachine.meshRenderIndicator.material.color = colorState;
+        animator.SetBool("fleeing", true);
         navMeshController.UpdateTargetObjective(patrolScript.WayPoints[patrolScript.nextWayPoint].position);
         navMeshController.ChangeSpeed(1.5f);
         StartCoroutine(FleeingTime(10f));
@@ -31,6 +33,7 @@ public class FleeState : MonoBehaviour
     private IEnumerator FleeingTime(float timeFleeing)
     {
         yield return new WaitForSeconds(timeFleeing);
+        animator.SetBool("fleeing", false);
         stateMachine.ActivateState(stateMachine.patrolState);
         navMeshController.ChangeSpeed(2.5f);
         health.actualHealth = health.totalHealth;

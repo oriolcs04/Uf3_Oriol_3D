@@ -7,6 +7,7 @@ public class PatrolScript : MonoBehaviour
     public Transform[] WayPoints;
     public Color colorState = Color.green;
 
+    private Animator animator;
     private StateMachine stateMachine;
     private NavMeshController navMeshController;
     private VisionController visionController;
@@ -14,6 +15,7 @@ public class PatrolScript : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();    
         stateMachine = GetComponent<StateMachine>();
         navMeshController = GetComponent<NavMeshController>();
         visionController = GetComponent<VisionController>();
@@ -31,6 +33,7 @@ public class PatrolScript : MonoBehaviour
         if (navMeshController.ObjectiveArrived())
         {
             //Si supera la longuitud del array vuelve a 0.
+            animator.SetFloat("velocity", 0f);
             nextWayPoint = (nextWayPoint + 1) % WayPoints.Length;
             UpdateWayPoint();
         }
@@ -38,13 +41,15 @@ public class PatrolScript : MonoBehaviour
 
     private void OnEnable()
     {
-        stateMachine.meshRenderIndicator.material.color = colorState;
+        animator.SetFloat("velocity", 4f);
         navMeshController.UpdateTargetObjective(WayPoints[nextWayPoint].position);
     }
 
     void UpdateWayPoint()
     {
         navMeshController.UpdateTargetObjective(WayPoints[nextWayPoint].position);
+        animator.SetFloat("velocity", 4f);
+
     }
 
     //Si el jugador entra dentro del area del usuario, este cambia a estado de alerta.

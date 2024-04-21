@@ -9,6 +9,8 @@ public class StateMachine : MonoBehaviour
     public MonoBehaviour persecuteState;
     public MonoBehaviour initialState;
     public MonoBehaviour alertState;
+    public MonoBehaviour deathState;
+
 
     public MeshRenderer meshRenderIndicator;
 

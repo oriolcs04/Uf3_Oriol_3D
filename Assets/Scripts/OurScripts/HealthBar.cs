@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -10,11 +11,11 @@ public class HealthBar : MonoBehaviour
     public float totalHealth;
     public float actualHealth;
     public Slider healthBar;
-
+    Animator animator;
     private float lifeToBar;
 
     private StateMachine stateMachine;
-
+    
     private void Start()
     {
         actualHealth = totalHealth;
@@ -29,6 +30,10 @@ public class HealthBar : MonoBehaviour
     {
         HealthToBar();
         healthBar.value = lifeToBar;
+        if (actualHealth < 1)
+        {
+            stateMachine.ActivateState(stateMachine.deathState);
+        }
         CheckLife();
     }
 
@@ -49,9 +54,13 @@ public class HealthBar : MonoBehaviour
         {
             stateMachine.ActivateState(stateMachine.fleeState);
         }
+
+        
     }
 
-
-
+    IEnumerator Resurection()
+    {
+        yield return new WaitForSeconds(3f);
+    }
 }
 
